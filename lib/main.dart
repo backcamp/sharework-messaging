@@ -27,7 +27,12 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
 
-  print("Handling a background message: ${message.messageId}");
+  debugPrint("Handling a background message: ${message.messageId}");
+  if (message.notification != null) {
+    debugPrint('message is a notification');
+    debugPrint(
+        'message notification: ${message.notification!.title} - ${message.notification!.body}');
+  }
 }
 
 void main() {
@@ -174,6 +179,8 @@ class ApplicationState extends ChangeNotifier {
 
       if (remoteMessage.notification != null) {
         debugPrint('message is a notification');
+        debugPrint(
+            'message notification: ${remoteMessage.notification!.title} - ${remoteMessage.notification!.body}');
         // On Android, foreground notifications are not shown, only when the app
         // is backgrounded.
       }
